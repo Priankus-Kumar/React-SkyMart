@@ -1,8 +1,12 @@
 import React, { useContext } from 'react';
 import { Store } from '../context/MyStore';
+import { useNavigate } from 'react-router';
 
 const Productcard = () => {
+
 let {productData, setProductData}=  useContext(Store)
+let navigate= useNavigate()
+
     return (
     <div className="min-h-screen bg-[#020617] px-8 py-12">
       <h1 className="text-5xl font-black text-center text-white mb-12">
@@ -12,6 +16,7 @@ let {productData, setProductData}=  useContext(Store)
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
         {productData.map((item) => (
           <div
+          onClick={()=>{navigate(`/detail/${item.id}`)}}
             key={item.id}
             className="group bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl overflow-hidden hover:border-[#72B01D] hover:shadow-[0_0_35px_#72B01D50] transition-all duration-500 hover:-translate-y-3"
           >

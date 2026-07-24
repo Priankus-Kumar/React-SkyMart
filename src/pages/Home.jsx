@@ -1,5 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router";
+import Productcard from "../components/Productcard";
 
 const Home = () => {
   return (
@@ -59,7 +60,7 @@ const Home = () => {
 
               <h2 className="text-4xl font-bold mt-5">Free</h2>
 
-              <p className="text-[#94A3B8] mt-2">Delivery above ₹599</p>
+              <p className="text-[#94A3B8] mt-2">Delivery above $599</p>
             </div>
           </div>
         </div>
@@ -92,7 +93,7 @@ const Home = () => {
               <div className="flex justify-between items-center">
                 <div>
                   <p className="text-[#94A3B8]">Total Value</p>
-                  <h2 className="text-5xl font-black mt-3">₹0</h2>
+                  <h2 className="text-5xl font-black mt-3">$<span>0</span></h2>
                   <p className="text-[#94A3B8] mt-2">Ready to checkout</p>
                 </div>
 
@@ -117,6 +118,7 @@ const Home = () => {
           </div>
         </div>
       </div>
+      <Productcard/>
     </div>
   );
 };

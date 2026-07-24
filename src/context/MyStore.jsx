@@ -11,7 +11,7 @@ export const ContextProvider = ({ children }) => {
     try {
       let response = await axios.get("https://fakestoreapi.com/products",);
       setProductData(response.data);
-      console.log(response.data);
+      // console.log(response.data);
     } catch (error) {
       console.log("error==>>>", error);
     }
