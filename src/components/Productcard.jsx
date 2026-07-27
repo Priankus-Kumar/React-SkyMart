@@ -1,13 +1,15 @@
-import React, { useContext } from 'react';
-import { Store } from '../context/MyStore';
-import { useNavigate } from 'react-router';
+import React, { useContext, useState } from "react";
+import { Store } from "../context/MyStore";
+import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 
 const Productcard = () => {
+  const { productData, setProductDatacart, AddCart } = useContext(Store);
+  const [addedItems, setAddedItems] = useState({});
 
-let {productData, setProductData}=  useContext(Store)
-let navigate= useNavigate()
+  let navigate = useNavigate();
 
-    return (
+  return (
     <div className="min-h-screen bg-[#020617] px-8 py-12">
       <h1 className="text-5xl font-black text-center text-white mb-12">
         Trending <span className="text-[#72B01D]">Products</span>
@@ -16,13 +18,15 @@ let navigate= useNavigate()
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
         {productData.map((item) => (
           <div
-          onClick={()=>{navigate(`/detail/${item.id}`)}}
             key={item.id}
             className="group bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl overflow-hidden hover:border-[#72B01D] hover:shadow-[0_0_35px_#72B01D50] transition-all duration-500 hover:-translate-y-3"
           >
             {/* Image */}
             <div className="relative overflow-hidden h-72 bg-white p-6">
               <img
+                onClick={() => {
+                  navigate(`/detail/${item.id}`);
+                }}
                 src={item.image}
                 alt={item.title}
                 className="w-full h-full object-contain transition duration-500 group-hover:scale-110"
@@ -61,9 +65,20 @@ let navigate= useNavigate()
                   </h3>
                 </div>
 
-                <button className="bg-[#72B01D] text-black px-5 py-3 rounded-2xl font-bold hover:scale-105 hover:shadow-[0_0_25px_#72B01D] transition-all duration-300">
+                <button
+                  onClick={() => {
+                    if (!addedItems[item.id]) {
+                      AddCart(item);
+                      setAddedItems((prev) => ({ ...prev, [item.id]: true }));
+                      toast.success("Product is Added to the Cart")
+                    }
+                  }}
+                  disabled={addedItems[item.id]}
+                  className={`bg-[#72B01D] text-black px-5 py-3 rounded-2xl font-bold hover:scale-105 hover:shadow-[0_0_25px_#72B01D] transition-all duration-300 ` +
+                    (addedItems[item.id] ? "opacity-50 cursor-not-allowed" : "")}
+                >
                   <i className="ri-shopping-cart-line mr-2"></i>
-                  Add
+                  {addedItems[item.id] ? 'Added' : 'Add'}
                 </button>
               </div>
 
@@ -85,5 +100,4 @@ let navigate= useNavigate()
   );
 };
 
-
-export default Productcard
+export default Productcard;

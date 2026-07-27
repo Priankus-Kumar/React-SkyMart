@@ -2,9 +2,10 @@ import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { Store } from "../context/MyStore";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const SingleProduct = () => {
-  const { productData } = useContext(Store);
+  const { productData, AddCart } = useContext(Store);
   let { id } = useParams();
   const [SingleData, setSingleData] = useState({});
 
@@ -12,7 +13,7 @@ const SingleProduct = () => {
     try {
       let res = await axios.get(`https://fakestoreapi.com/products/${id}`);
       setSingleData(res.data);
-      console.log(res.data);
+      // console.log(res.data);
     } catch (error) {
       console.log("error==>>", error);
     }
@@ -52,7 +53,13 @@ const SingleProduct = () => {
           </p>
 
           <div className="flex gap-5 pt-6">
-            <button className="bg-[#72B01D] text-black font-bold px-8 py-4 rounded-2xl hover:scale-105 hover:shadow-[0_0_35px_#72B01D] transition">
+            <button
+              className="bg-[#72B01D] text-black font-bold px-8 py-4 rounded-2xl hover:scale-105 hover:shadow-[0_0_35px_#72B01D] transition"
+              onClick={() => {
+                AddCart(SingleData);
+                toast.success("Added to cart");
+              }}
+            >
               <i className="ri-shopping-cart-line mr-2"></i>
               Add To Cart
             </button>

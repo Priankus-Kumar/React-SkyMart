@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router";
 import Productcard from "../components/Productcard";
+import { Store } from "../context/MyStore";
 
 const Home = () => {
+  const { cart, totalPrice } = useContext(Store);
+
   return (
     <div className="min-h-screen bg-[#020617] text-[#F8FAFC] px-8 py-10">
       <div className="max-w-7xl mx-auto grid lg:grid-cols-[2fr_1fr] gap-8">
@@ -13,7 +16,7 @@ const Home = () => {
           </p>
 
           <h1 className="text-6xl font-black mt-4 leading-tight">
-            Welcome back,
+            Welcome BACK,
             <br />
             <span className="text-[#72B01D]">Priankus</span>
           </h1>
@@ -75,7 +78,7 @@ const Home = () => {
               <div className="flex justify-between items-center">
                 <div>
                   <p className="text-[#94A3B8]">Cart Items</p>
-                  <h2 className="text-6xl font-black mt-3">0</h2>
+                  <h2 className="text-6xl font-black mt-3">{cart.length}</h2>
                   <p className="text-[#94A3B8] mt-2">In your shopping bag</p>
                 </div>
 
@@ -93,7 +96,11 @@ const Home = () => {
               <div className="flex justify-between items-center">
                 <div>
                   <p className="text-[#94A3B8]">Total Value</p>
-                  <h2 className="text-5xl font-black mt-3">$<span>0</span></h2>
+                  <h2 className="text-5xl font-black mt-3">
+                    <span className="text-[#72B01D]">
+                      ${totalPrice().toFixed(2)}
+                    </span>
+                  </h2>
                   <p className="text-[#94A3B8] mt-2">Ready to checkout</p>
                 </div>
 
@@ -118,7 +125,7 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <Productcard/>
+      <Productcard />
     </div>
   );
 };
