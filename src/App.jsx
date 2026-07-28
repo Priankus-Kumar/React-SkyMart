@@ -7,6 +7,7 @@ const App = () => {
   return (
     <div className=" w-full bg-[#0F172A] text-white px-5">
       <div>
+        
         <Navbar />
         <Approutes />
       </div>

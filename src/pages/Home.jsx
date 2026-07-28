@@ -5,6 +5,7 @@ import { Store } from "../context/MyStore";
 
 const Home = () => {
   const { cart, totalPrice } = useContext(Store);
+  const storedName = JSON.parse(localStorage.getItem("signupUser"));
 
   return (
     <div className="min-h-screen bg-[#020617] text-[#F8FAFC] px-8 py-10">
@@ -18,7 +19,7 @@ const Home = () => {
           <h1 className="text-6xl font-black mt-4 leading-tight">
             Welcome BACK,
             <br />
-            <span className="text-[#72B01D]">Priankus</span>
+            <span className="text-[#72B01D] capitalize">{storedName.name}</span>
           </h1>
 
           <p className="text-[#94A3B8] text-lg leading-8 mt-8 max-w-2xl">

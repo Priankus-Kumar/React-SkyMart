@@ -1,7 +1,38 @@
-import React from "react";
-import { NavLink } from "react-router";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { NavLink, useNavigate } from "react-router";
 
 const Login = () => {
+  const [Users, setUsers] = useState("");
+
+  let {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
+
+  const navigate = useNavigate();
+
+  const formSubmit = (data) => {
+    console.log(data);
+    const storedUser = JSON.parse(localStorage.getItem("signupUser"));
+    if (!storedUser) {
+      alert("No account found. Please sign up first.");
+      return;
+    }
+
+    if (
+      storedUser.email === data.email &&
+      storedUser.password === data.password
+    ) {
+      localStorage.setItem("auth", "true");
+      navigate("/");
+    } else {
+      alert("Invalid email or password");
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[#020617] flex items-center justify-center px-5">
       <div className="w-full sm:max-w-lg md:max-w-xl backdrop-blur-2xl bg-white/5 border border-white/10 rounded-3xl p-10 shadow-2xl hover:border-[#72B01D] hover:shadow-[0_0_40px_#72B01D40] transition-all duration-500">
@@ -22,7 +53,7 @@ const Login = () => {
 
         {/* Form */}
 
-        <form className="mt-10 space-y-6">
+        <form onSubmit={handleSubmit(formSubmit)} className="mt-10 space-y-6">
           {/* Email */}
 
           <div>
@@ -30,10 +61,16 @@ const Login = () => {
               <i className="ri-mail-line text-[#72B01D] text-xl"></i>
 
               <input
+                {...register("email", {
+                  required: "Email is required",
+                })}
                 type="email"
                 placeholder="Enter Your Email"
                 className="w-full bg-transparent px-4 py-4 text-white placeholder:text-[#94A3B8] outline-none"
               />
+              {errors.email && (
+                <p className="text-red-700"> {errors.email.message} </p>
+              )}
             </div>
           </div>
 
@@ -44,12 +81,24 @@ const Login = () => {
               <i className="ri-lock-line text-[#72B01D] text-xl"></i>
 
               <input
+                {...register("password", {
+                  required: "password is required",
+                  minLength: {
+                    value: 6,
+                    message: "minimum length of password 6",
+                  },
+                  maxLength: {
+                    value: 16,
+                    message: "maximum length of password 16",
+                  },
+                })}
                 type="password"
                 placeholder="Enter Your Password"
                 className="w-full bg-transparent px-4 py-4 text-white placeholder:text-[#94A3B8] outline-none"
               />
-
-              <i className="ri-eye-line text-[#94A3B8] cursor-pointer hover:text-[#72B01D]"></i>
+              {errors.password && (
+                <p className="text-red-700"> {errors.password.message} </p>
+              )}
             </div>
           </div>
 

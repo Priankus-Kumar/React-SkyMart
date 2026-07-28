@@ -1,7 +1,25 @@
-import React from "react";
-import { NavLink } from "react-router";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { NavLink, useNavigate } from "react-router";
 
 const Signup = () => {
+  const [SignupUser, setSignupUser] = useState("");
+  let navigate = useNavigate();
+  let {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
+
+  const formSubmit = (data) => {
+    console.log(data);
+    localStorage.setItem("signupUser", JSON.stringify(data));
+    setSignupUser(JSON.stringify(data));
+    
+    reset();
+    navigate("/login");
+  };
   return (
     <div className="bg-[#020617] flex items-center justify-center min-h-screen px-5">
       {/* Background Blur */}
@@ -24,35 +42,61 @@ const Signup = () => {
 
         {/* Form */}
 
-        <form className="mt-10 space-y-6">
+        <form onSubmit={handleSubmit(formSubmit)} className="mt-10 space-y-6">
           <div className="relative">
             <i className="ri-user-3-line absolute left-4 top-4 text-[#72B01D] text-xl"></i>
 
             <input
+              {...register("name", {
+                required: "Name is Required",
+              })}
               type="text"
               placeholder="Enter Your Name"
               className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white placeholder-[#94A3B8] outline-none focus:border-[#72B01D] transition"
             />
+            {errors.name && (
+              <p className="text-red-700"> {errors.name.message} </p>
+            )}
           </div>
 
           <div className="relative">
             <i className="ri-mail-line absolute left-4 top-4 text-[#72B01D] text-xl"></i>
 
             <input
+              {...register("email", {
+                required: "Email is Required",
+              })}
               type="email"
               placeholder="Enter Your Email"
               className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white placeholder-[#94A3B8] outline-none focus:border-[#72B01D] transition"
             />
+            {errors.email && (
+              <p className="text-red-700"> {errors.email.message} </p>
+            )}
           </div>
 
           <div className="relative">
             <i className="ri-lock-password-line absolute left-4 top-4 text-[#72B01D] text-xl"></i>
 
             <input
+              {...register("password", {
+                required: "password is required",
+                minLength: {
+                  value: 6,
+                  message: "minimum length of password 6",
+                },
+                maxLength: {
+                  value: 16,
+                  message: "maximum length of password 16",
+                },
+              })}
               type="password"
               placeholder="Enter Your Password"
               className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white placeholder-[#94A3B8] outline-none focus:border-[#72B01D] transition"
             />
+            {errors.password && (
+              <p className="text-red-700"> {errors.password.message} </p>
+            )}
           </div>
 
           <button className="w-full bg-[#72B01D] text-black font-bold py-4 rounded-2xl hover:scale-105 hover:shadow-[0_0_30px_#72B01D] transition-all duration-300">

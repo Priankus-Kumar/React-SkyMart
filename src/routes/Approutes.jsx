@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes } from "react-router";
+import { Route, Routes, Navigate } from "react-router";
 import Home from "../pages/Home";
 import About from "../pages/About";
 import Shop from "../pages/Shop";
@@ -9,16 +9,22 @@ import Login from "../Auth/Login";
 import Signup from "../Auth/Signup";
 
 const Approutes = () => {
+  
+  const ProtectRoute = ({ element }) => {
+    const isAuthenticated = localStorage.getItem("auth") === "true";
+    return isAuthenticated ? element : <Navigate to="/signup" />;
+  };
+
   return (
     <div className="py-7 max-w-7xl mx-auto">
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/shop" element={<Shop />} />
-        <Route path="/about" element={<About />} />
+        <Route path="/" element={<ProtectRoute element={<Home />} />} />
+        <Route path="/shop" element={<ProtectRoute element={<Shop />} />} />
+        <Route path="/about" element={<ProtectRoute element={<About />} />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/detail/:id" element={<SingleProduct />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup/>}/>
+        <Route path="/signup" element={<Signup />} />
       </Routes>
     </div>
   );
