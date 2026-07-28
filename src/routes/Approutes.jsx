@@ -21,8 +21,8 @@ const Approutes = () => {
         <Route path="/" element={<ProtectRoute element={<Home />} />} />
         <Route path="/shop" element={<ProtectRoute element={<Shop />} />} />
         <Route path="/about" element={<ProtectRoute element={<About />} />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/detail/:id" element={<SingleProduct />} />
+        <Route path="/cart" element={<ProtectRoute element={<Cart />}/> } />
+        <Route path="/detail/:id" element={<ProtectRoute element={<SingleProduct />}/> } />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
       </Routes>

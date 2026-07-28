@@ -11,6 +11,7 @@ const Cart = () => {
     DecreaseQuantity,
     RemoveProduct,
     totalPrice,
+    Checkout
   } = useContext(Store);
 
   return (
@@ -33,7 +34,6 @@ const Cart = () => {
             <div
               key={item.id}
               className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-6 hover:border-[#72B01D] hover:shadow-[0_0_35px_#72B01D40] transition"
-              onClick={() => AddCart(item)}
             >
               <div className="flex flex-col sm:flex-row gap-6">
                 {/* Image */}
@@ -77,9 +77,7 @@ const Cart = () => {
                     <div className="mt-3">
                       <button
                         className="text-lg bg-red-600 px-4 py-2 rounded-2xl font-bold cursor-pointer"
-                        onClick={(e) => {
-                          RemoveProduct(item.id);
-                        }}
+                        onClick={() => RemoveProduct(item.id)}
                       >
                         Remove
                       </button>
@@ -115,7 +113,9 @@ const Cart = () => {
               <span className="text-[#72B01D]">${totalPrice().toFixed(2)}</span>
             </div>
           </div>
-          <button className="w-full mt-10 bg-[#72B01D] text-black py-4 rounded-2xl font-bold text-lg hover:shadow-[0_0_35px_#72B01D] hover:scale-105 transition-all duration-300">
+          <button 
+          onClick={Checkout}
+          className="w-full mt-10 bg-[#72B01D] text-black py-4 rounded-2xl font-bold text-lg hover:shadow-[0_0_35px_#72B01D] hover:scale-105 transition-all duration-300">
             Proceed to Checkout
           </button>
           <button className="w-full mt-4 border border-[#72B01D] text-[#72B01D] py-4 rounded-2xl ">

@@ -4,10 +4,20 @@ import { createContext, useEffect, useState } from "react";
 export const Store = createContext();
 
 export const ContextProvider = ({ children }) => {
-  
   const [productData, setProductData] = useState([]);
-  const [cart, setCart] = useState([]);
+  // =================================================================
+  //  localstorage concept of cart
+  // =================================================================
+  const savedCart = JSON.parse(localStorage.getItem("Cart")) || [];
+  const [cart, setCart] = useState(savedCart);
+  useEffect(() => {
+    localStorage.setItem("Cart", JSON.stringify(cart));
+  }, [cart]);
+  // =================================================================
+  // =================================================================
+
   // api call for the product from the fake store
+  // call the api one time only using useEffect(()=>{},[])with dependency.
   const getProductData = async () => {
     try {
       let response = await axios.get("https://fakestoreapi.com/products");
@@ -17,22 +27,24 @@ export const ContextProvider = ({ children }) => {
       console.log("error==>>>", error);
     }
   };
-  // call the api one time only using useEffect(()=>{},[])with dependency.
+
   useEffect(() => {
     getProductData();
   }, []);
+  // =================================================================
+  // =================================================================
 
   // All cart feature using ADD, DELETE, INCREASE, DESCREASE,
   const AddCart = (product) => {
-    const exist = cart.find(function (element) {
-      return element.id === product.id;
-    });
+    const exist = cart.find((element) => element.id === product.id);
     if (exist) {
-      cart.map(function (element, idx) {
-        element.id === product.id
-          ? { ...element, quantity: element.quantity + 1 }
-          : element;
-      });
+      setCart(
+        cart.map((element) =>
+          element.id === product.id
+            ? { ...element, quantity: element.quantity + 1 }
+            : element,
+        ),
+      );
     } else {
       setCart([...cart, { ...product, quantity: 1 }]);
     }
@@ -57,16 +69,24 @@ export const ContextProvider = ({ children }) => {
   };
 
   const RemoveProduct = (id) => {
-    setCart(
-      cart.filter((element, idx) => {
-        return element.id !== id;
-      }),
+    setCart((prev) =>
+      prev
+        .map((item) =>
+          item.id === id ? { ...item, quantity: item.quantity - 1 } : item,
+        )
+        .filter((item) => item.quantity > 0),
     );
   };
 
   const totalPrice = () => {
     return cart.reduce((acc, val) => acc + val.price * val.quantity, 0);
   };
+
+  const Checkout = () => {
+    setCart([]);
+    localStorage.removeItem("Cart");
+  };
+
   return (
     <Store.Provider
       value={{
@@ -78,7 +98,8 @@ export const ContextProvider = ({ children }) => {
         increaseQuantity,
         DecreaseQuantity,
         RemoveProduct,
-        totalPrice
+        totalPrice,
+        Checkout,
       }}
     >
       {children}
