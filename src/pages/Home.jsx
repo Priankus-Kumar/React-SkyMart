@@ -8,21 +8,21 @@ const Home = () => {
   const storedName = JSON.parse(localStorage.getItem("signupUser"));
 
   return (
-    <div className="min-h-screen bg-[#020617] text-[#F8FAFC] px-8 py-10">
-      <div className="max-w-7xl mx-auto grid lg:grid-cols-[2fr_1fr] gap-8">
+    <div className="min-h-screen bg-[#020617] text-[#F8FAFC] px-4 sm:px-8 py-10">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[2fr_1fr] gap-8">
         {/* LEFT HERO */}
-        <div className="backdrop-blur-2xl bg-white/5 border border-white/10 rounded-3xl p-10 shadow-xl hover:border-[#72B01D] hover:shadow-[0_0_40px_#72B01D30] transition-all duration-500">
+        <div className="backdrop-blur-2xl bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-10 shadow-xl hover:border-[#72B01D] hover:shadow-[0_0_40px_#72B01D30] transition-all duration-500">
           <p className="text-[#72B01D] text-lg font-semibold flex items-center gap-2">
             GooD Morning 🫡
           </p>
 
-          <h1 className="text-6xl font-black mt-4 leading-tight">
+          <h1 className="text-4xl sm:text-6xl font-black mt-4 leading-tight">
             Welcome BACK,
             <br />
             <span className="text-[#72B01D] capitalize">{storedName.name}</span>
           </h1>
 
-          <p className="text-[#94A3B8] text-lg leading-8 mt-8 max-w-2xl">
+          <p className="text-[#94A3B8] text-base sm:text-lg leading-8 mt-8 max-w-2xl">
             Discover today's hand-picked collection of premium electronics,
             fashion, accessories and everyday essentials. Experience shopping
             that's faster, smarter and made just for you.
@@ -30,15 +30,15 @@ const Home = () => {
 
           {/* Buttons */}
 
-          <div className="flex gap-5 mt-10">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-5 mt-8">
             <NavLink to="/shop">
-              <button className="bg-[#72B01D] text-black font-bold px-8 py-4 rounded-2xl flex items-center gap-3 hover:scale-105 transition-all duration-300">
+              <button className="bg-[#72B01D] text-black font-bold px-6 sm:px-8 py-3 sm:py-4 rounded-2xl flex items-center gap-3 hover:scale-105 transition-all duration-300">
                 Shop Now
                 <i className="ri-arrow-right-line text-xl"></i>
               </button>
             </NavLink>
             <NavLink to="/shop">
-              <button className="border border-[#72B01D] text-[#72B01D] px-8 py-4 rounded-2xl   hover:shadow-[0_0_30px_#72B01D] transition-all duration-300">
+              <button className="border border-[#72B01D] text-[#72B01D] px-6 sm:px-8 py-3 sm:py-4 rounded-2xl   hover:shadow-[0_0_30px_#72B01D] transition-all duration-300">
                 View All Products
               </button>
             </NavLink>

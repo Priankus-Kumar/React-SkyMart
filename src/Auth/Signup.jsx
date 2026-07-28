@@ -13,7 +13,7 @@ const Signup = () => {
   } = useForm();
 
   const formSubmit = (data) => {
-    console.log(data);
+    // console.log(data);
     localStorage.setItem("signupUser", JSON.stringify(data));
     setSignupUser(JSON.stringify(data));
     

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { NavLink, useNavigate } from "react-router";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [Users, setUsers] = useState("");
@@ -15,10 +16,10 @@ const Login = () => {
   const navigate = useNavigate();
 
   const formSubmit = (data) => {
-    console.log(data);
+    // console.log(data);
     const storedUser = JSON.parse(localStorage.getItem("signupUser"));
     if (!storedUser) {
-      alert("No account found. Please sign up first.");
+      toast.error("No account found. Please sign up first.");
       return;
     }
 
@@ -29,7 +30,7 @@ const Login = () => {
       localStorage.setItem("auth", "true");
       navigate("/");
     } else {
-      alert("Invalid email or password");
+      toast.error("Invalid email or password");
     }
   };
 
