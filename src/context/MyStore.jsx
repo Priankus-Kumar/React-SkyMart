@@ -5,19 +5,24 @@ export const Store = createContext();
 
 export const ContextProvider = ({ children }) => {
   const [productData, setProductData] = useState([]);
+
   // =================================================================
   //  localstorage concept of cart
   // =================================================================
+
   const savedCart = JSON.parse(localStorage.getItem("Cart")) || [];
   const [cart, setCart] = useState(savedCart);
   useEffect(() => {
     localStorage.setItem("Cart", JSON.stringify(cart));
   }, [cart]);
+
   // =================================================================
+  // End
   // =================================================================
 
   // api call for the product from the fake store
   // call the api one time only using useEffect(()=>{},[])with dependency.
+
   const getProductData = async () => {
     try {
       let response = await axios.get("https://fakestoreapi.com/products");
